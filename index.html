@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>For Mriga, with love</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --ink: #5b2637;
+      --muted: #9c6476;
+      --rose: #e887a0;
+      --deep-rose: #c85c7b;
+      --blush: #fff3f6;
+      --cream: #fffaf8;
+      --white: #ffffff;
+      --shadow: 0 24px 70px rgba(151, 73, 99, 0.14);
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--cream);
+      font-family: "DM Sans", sans-serif;
+      overflow-x: hidden;
+    }
+
+    .page {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .floating-hearts {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .floating-hearts span {
+      position: absolute;
+      color: rgba(232, 135, 160, 0.42);
+      font-size: clamp(14px, 2vw, 23px);
+      animation: float 12s linear infinite;
+    }
+
+    .floating-hearts span:nth-child(1) { left: 8%; top: 16%; animation-delay: -2s; }
+    .floating-hearts span:nth-child(2) { left: 88%; top: 28%; animation-delay: -8s; }
+    .floating-hearts span:nth-child(3) { left: 22%; top: 72%; animation-delay: -5s; }
+    .floating-hearts span:nth-child(4) { left: 75%; top: 82%; animation-delay: -10s; }
+    .floating-hearts span:nth-child(5) { left: 49%; top: 44%; animation-delay: -7s; }
+
+    .hero, .section, footer { position: relative; z-index: 1; }
+
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 80px 24px;
+      text-align: center;
+      background:
+        radial-gradient(circle at 15% 20%, rgba(255,255,255,.92) 0 7%, transparent 28%),
+        radial-gradient(circle at 87% 75%, rgba(250,198,211,.5) 0 10%, transparent 32%),
+        linear-gradient(145deg, #fff8f9, #ffe5ed 48%, #fff8f5);
+    }
+
+    .hero-content { max-width: 760px; animation: appear .9s ease both; }
+
+    .eyebrow {
+      margin: 0 0 20px;
+      color: var(--deep-rose);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+    }
+
+    h1, h2, p { margin-top: 0; }
+
+    h1, h2 {
+      font-family: "Playfair Display", serif;
+      font-weight: 600;
+      line-height: 1.08;
+    }
+
+    h1 {
+      margin-bottom: 25px;
+      font-size: clamp(4rem, 11vw, 8rem);
+      letter-spacing: -.05em;
+    }
+
+    .hero-copy {
+      max-width: 580px;
+      margin: 0 auto 34px;
+      color: var(--muted);
+      font-size: clamp(1.05rem, 2vw, 1.3rem);
+      line-height: 1.8;
+    }
+
+    .heart-mark {
+      display: inline-grid;
+      place-items: center;
+      width: 76px;
+      height: 76px;
+      margin-bottom: 25px;
+      color: var(--white);
+      background: var(--rose);
+      border-radius: 50%;
+      box-shadow: 0 12px 30px rgba(200, 92, 123, .26);
+      font-size: 32px;
+      animation: heartbeat 2.2s ease-in-out infinite;
+    }
+
+    .scroll-cue {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--deep-rose);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+
+    .scroll-cue::after {
+      content: "↓";
+      font-size: 22px;
+      animation: bounce 1.5s ease-in-out infinite;
+    }
+
+    .section {
+      padding: 120px 24px;
+    }
+
+    .section-inner {
+      width: min(1050px, 100%);
+      margin: 0 auto;
+    }
+
+    .section-heading {
+      max-width: 650px;
+      margin-bottom: 54px;
+    }
+
+    .section-heading h2 {
+      margin-bottom: 16px;
+      font-size: clamp(2.6rem, 6vw, 4.8rem);
+      letter-spacing: -.04em;
+    }
+
+    .section-heading p {
+      color: var(--muted);
+      font-size: 1.08rem;
+      line-height: 1.7;
+    }
+
+    .kisses-section { background: var(--white); }
+
+    .kiss-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .kiss-card {
+      min-height: 260px;
+      padding: 34px 28px;
+      border: 1px solid #f9dbe3;
+      border-radius: 28px;
+      background: linear-gradient(145deg, #fff9fa, #fff0f4);
+      box-shadow: 0 10px 35px rgba(185, 90, 119, .06);
+      transition: transform .3s ease, box-shadow .3s ease;
+    }
+
+    .kiss-card:hover {
+      transform: translateY(-8px) rotate(1deg);
+      box-shadow: 0 20px 45px rgba(185, 90, 119, .15);
+    }
+
+    .kiss-icon {
+      display: block;
+      margin-bottom: 28px;
+      font-size: 46px;
+    }
+
+    .kiss-card h3 {
+      margin: 0 0 10px;
+      font-family: "Playfair Display", serif;
+      font-size: 1.6rem;
+    }
+
+    .kiss-card p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    .letter-section {
+      background:
+        radial-gradient(circle at 10% 10%, rgba(255,255,255,.95), transparent 28%),
+        linear-gradient(135deg, #ffeaf0, #fff7f2);
+      text-align: center;
+    }
+
+    .letter-section .section-heading { margin-right: auto; margin-left: auto; }
+
+    .photo-section {
+      background: #fffaf8;
+      text-align: center;
+    }
+
+    .photo-section .section-heading {
+      max-width: 700px;
+      margin-right: auto;
+      margin-left: auto;
+    }
+
+    .photo-frame {
+      width: min(620px, 92vw);
+      margin: 0 auto 34px;
+      padding: 14px 14px 44px;
+      background: var(--white);
+      box-shadow: var(--shadow);
+      transform: rotate(-1.5deg);
+    }
+
+    .photo-frame img {
+      display: block;
+      width: 100%;
+      max-height: 620px;
+      object-fit: cover;
+      border-radius: 2px;
+    }
+
+    .photo-caption {
+      margin: 0 auto;
+      max-width: 620px;
+      color: var(--muted);
+      font-size: 1.12rem;
+      line-height: 1.8;
+    }
+
+    .photo-caption strong {
+      display: block;
+      margin-bottom: 10px;
+      color: var(--deep-rose);
+      font-family: "Playfair Display", serif;
+      font-size: 1.8rem;
+    }
+
+    .envelope-wrap {
+      display: grid;
+      place-items: center;
+      min-height: 650px;
+      perspective: 1200px;
+    }
+
+    .envelope {
+      position: relative;
+      width: min(620px, 92vw);
+      height: 380px;
+      cursor: pointer;
+      filter: drop-shadow(0 25px 20px rgba(151, 73, 99, .18));
+      transition: transform .35s ease;
+    }
+
+    .envelope:hover { transform: translateY(-6px); }
+    .envelope.open { cursor: default; }
+
+    .envelope-back,
+    .envelope-front {
+      position: absolute;
+      inset: 0;
+      border-radius: 12px;
+      background: #e58aa1;
+    }
+
+    .envelope-back::before,
+    .envelope-back::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      width: 0;
+      height: 0;
+      border-style: solid;
+    }
+
+    .envelope-back::before {
+      left: 0;
+      border-width: 0 0 380px 310px;
+      border-color: transparent transparent #d97590 transparent;
+    }
+
+    .envelope-back::after {
+      right: 0;
+      border-width: 380px 0 0 310px;
+      border-color: transparent transparent transparent #d97590;
+    }
+
+    .envelope-front {
+      z-index: 3;
+      clip-path: polygon(0 0, 50% 62%, 100% 0, 100% 100%, 0 100%);
+      background: #d97791;
+    }
+
+    .envelope-flap {
+      position: absolute;
+      inset: 0 0 auto;
+      z-index: 4;
+      height: 235px;
+      transform-origin: top;
+      clip-path: polygon(0 0, 100% 0, 50% 100%);
+      background: #ed9caf;
+      transition: transform .8s cubic-bezier(.68, -.3, .32, 1.25), z-index 0s .4s;
+    }
+
+    .letter {
+      position: absolute;
+      left: 5%;
+      z-index: 2;
+      width: 90%;
+      height: 330px;
+      padding: 30px 36px;
+      border-radius: 8px;
+      background: #fffdf9;
+      box-shadow: 0 2px 8px rgba(92, 38, 55, .08);
+      text-align: left;
+      transition: height .9s cubic-bezier(.68, -.3, .32, 1.25), transform .9s cubic-bezier(.68, -.3, .32, 1.25), z-index 0s .45s;
+    }
+
+    .letter h3 {
+      margin: 0 0 14px;
+      color: var(--deep-rose);
+      font-family: "Playfair Display", serif;
+      font-size: 1.5rem;
+    }
+
+    .letter p {
+      color: #80606b;
+      font-size: 1rem;
+      line-height: 1.7;
+    }
+
+    .letter .editable {
+      color: #bc8292;
+      font-style: italic;
+    }
+
+    .envelope.open .envelope-flap {
+      z-index: 1;
+      transform: rotateX(180deg);
+      transition: transform .8s cubic-bezier(.68, -.3, .32, 1.25), z-index 0s;
+    }
+
+    .envelope.open .letter {
+      z-index: 5;
+      height: 520px;
+      transform: translateY(-390px);
+      transition: height .9s cubic-bezier(.68, -.3, .32, 1.25), transform .9s cubic-bezier(.68, -.3, .32, 1.25), z-index 0s .45s;
+    }
+
+    .open-hint {
+      margin: 18px 0 0;
+      color: var(--deep-rose);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      transition: opacity .3s ease;
+    }
+
+    .envelope.open + .open-hint { opacity: 0; }
+
+    footer {
+      padding: 38px 24px;
+      color: #b27687;
+      background: #fff0f4;
+      text-align: center;
+      font-size: 13px;
+    }
+
+    .reveal { animation: reveal .8s ease both; }
+
+    @keyframes appear {
+      from { opacity: 0; transform: translateY(18px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes reveal {
+      from { opacity: 0; transform: translateY(35px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes heartbeat {
+      0%, 100% { transform: scale(1); }
+      12% { transform: scale(1.1); }
+      24% { transform: scale(1); }
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(5px); }
+    }
+
+    @keyframes float {
+      0% { transform: translateY(20px) rotate(0deg); opacity: 0; }
+      15%, 80% { opacity: 1; }
+      100% { transform: translateY(-100px) rotate(25deg); opacity: 0; }
+    }
+
+    @media (max-width: 700px) {
+      .hero { min-height: 92vh; }
+      .section { padding: 84px 20px; }
+      .kiss-grid { grid-template-columns: 1fr; }
+      .kiss-card { min-height: auto; }
+      .envelope-wrap { min-height: 550px; }
+      .envelope { height: 280px; }
+      .envelope-back::before { border-width: 0 0 280px 46vw; }
+      .envelope-back::after { border-width: 280px 0 0 46vw; }
+      .envelope-flap { height: 175px; }
+      .letter { height: 245px; padding: 22px 24px; }
+      .letter h3 { font-size: 1.2rem; }
+      .letter p { font-size: .88rem; line-height: 1.55; }
+      .envelope.open .letter { height: 420px; transform: translateY(-315px); }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <div class="floating-hearts" aria-hidden="true">
+      <span>♡</span><span>♥</span><span>♡</span><span>♥</span><span>♡</span>
+    </div>
+
+    <section class="hero">
+      <div class="hero-content">
+        <div class="heart-mark" aria-hidden="true">♥</div>
+        <p class="eyebrow">A little note from my heart</p>
+        <h1>Hello, Mriga</h1>
+        <p class="hero-copy">
+          I’m sorry if I’ve ever hurt you. I know I have hurt you,
+          but I sincerely apologize for that. You mean so much to me,
+          and I hope this little page reminds you.
+        </p>
+        <a class="scroll-cue" href="#kisses">keep scrolling</a>
+      </div>
+    </section>
+
+    <section class="section kisses-section" id="kisses">
+      <div class="section-inner">
+        <div class="section-heading reveal">
+          <p class="eyebrow">For you, always</p>
+          <h2>A few kisses,<br />just for you</h2>
+          <p>They may be on a screen for now, but every single one comes with all my love.</p>
+        </div>
+        <div class="kiss-grid">
+          <article class="kiss-card reveal">
+            <span class="kiss-icon">💋</span>
+            <h3>One for your forehead</h3>
+            <p>For comfort, warmth, and every moment I wish I could hold you close.</p>
+          </article>
+          <article class="kiss-card reveal">
+            <span class="kiss-icon">😘</span>
+            <h3>One for your cheeks</h3>
+            <p>Because seeing you smile is one of my favorite things in the world.</p>
+          </article>
+          <article class="kiss-card reveal">
+            <span class="kiss-icon">💕</span>
+            <h3>One for your heart</h3>
+            <p>A tiny reminder that you are loved, missed, and thought about every day.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section letter-section" id="letter">
+      <div class="section-inner">
+        <div class="section-heading reveal">
+          <p class="eyebrow">Something more personal</p>
+          <h2>I wrote you a letter</h2>
+          <p>Tap the envelope when you’re ready to open the part I’m still writing from my heart.</p>
+        </div>
+        <div class="envelope-wrap">
+          <div class="envelope" role="button" tabindex="0" aria-label="Open the love letter">
+            <div class="envelope-back"></div>
+            <div class="letter">
+              <h3>My love letter</h3>
+              <p class="editable">Hie My Baby, I'm sorry for ever complaining about the little things. You mean everything to me, and I want you to know that I love you more than words can say. I sometimes overthink and say mean things to you. I just want you to know that I don't want anything else in the world but you. I don't want any money, any gifts, or any attention from anyone else. I just want you my love. I LOVE YOU SWEETYPIE.</p>
+              <p>With all my love,<br />me ♡</p>
+            </div>
+            <div class="envelope-flap"></div>
+            <div class="envelope-front"></div>
+          </div>
+          <p class="open-hint">tap to open</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section photo-section">
+      <div class="section-inner">
+        <div class="section-heading reveal">
+          <p class="eyebrow">One last thing</p>
+          <h2>I’m truly sorry, my love</h2>
+        </div>
+        <div class="photo-frame reveal">
+          <img src="WhatsApp%20Image%202026-11-11%20at%2021.42.02.jpeg" alt="A special memory of us" />
+        </div>
+        <p class="photo-caption reveal">
+          <strong>Please forgive me ♡</strong>
+          I’m sorry for the times I’ve hurt you, for the little things I complained about,
+          and for the moments when my words were harsher than my heart. You mean everything
+          to me, and I’ll always keep choosing you, loving you, and trying to be better for us.
+        </p>
+      </div>
+    </section>
+
+    <footer>Made with a soft heart, especially for Mriga ♡</footer>
+  </main>
+
+  <script>
+    const envelope = document.querySelector(".envelope");
+
+    function openLetter() {
+      envelope.classList.add("open");
+    }
+
+    function closeLetter() {
+      envelope.classList.remove("open");
+    }
+
+    envelope.addEventListener("click", openLetter);
+    envelope.addEventListener("keydown", (event) => {
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        openLetter();
+      }
+    });
+    document.addEventListener("click", (event) => {
+      if (!envelope.contains(event.target)) {
+        closeLetter();
+      }
+    });
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") {
+        closeLetter();
+      }
+    });
+  </script>
+</body>
+</html>
